@@ -21,18 +21,19 @@ int main(void) {
 	printf("message queue ID: %d\n", iMsqid);
 
 	MsrpMessage sRcvMessage;
+	int ret = 0;
 	while (1) {
 		// 阻塞式接收消息
-		int ret = msgrcv(iMsqid, (void *)&sRcvMessage, MAX_TEXT_LEN + 1, TYPE1, 0);
-		if (ret != 0) {
-			printf("Error: errno: %d\n", ret);
+		ret = msgrcv(iMsqid, (void *)&sRcvMessage, MAX_TEXT_LEN + 1, TYPE1, 0);
+		if (ret == -1) {
+			printf("Error: failed to receive message\n");
 			return 1;
 		}
-		if (strncmp(sRcvMessage.mtext, "QUIT", 4) == 0) {
+/*		if (strncmp(sRcvMessage.mtext, "QUIT", 4) == 0) {
 			printf("QUIT\n");
 			break;
-		}
-		printf("Receive message: %s", sRcvMessage.mtext);
+		}*/
+		printf("Receive message: %s\n", sRcvMessage.mtext);
 	}
 
 	return 0;

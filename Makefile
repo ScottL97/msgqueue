@@ -1,7 +1,7 @@
 all: producer consumer
 
 producer: producer.c message.h
-	gcc producer.c -o producer
+	gcc -D_REENTRANT producer.c -o producer -lpthread
 
 consumer: consumer.c message.h
 	gcc consumer.c -o consumer
